@@ -7,19 +7,15 @@ import Link from "next/link";
 
 const IssuesPage = () => {
   return (
-    <Button
-      color="cyan"
-      variant="solid"
-      className="cursor-pointer transition-colors"
-    >
-      <Link
-        href="/issues/new"
-        className="flex items-center justify-center gap-x-1"
+    <Link href="/issues/new" className="cursor-pointer">
+      <Button
+        variant="solid"
+        className="flex items-center justify-center gap-x-1 transition-colors"
       >
         <AiOutlinePlus size={20} />
         <span>New Issue</span>
-      </Link>
-    </Button>
+      </Button>
+    </Link>
   );
 };
 
