@@ -1,7 +1,11 @@
 import Image from "next/image";
 
 const Home = () => {
-  return <>Hello world</>;
+  return (
+    <>
+      <span className="text-red-500">Hello world</span>
+    </>
+  );
 };
 
 export default Home;
