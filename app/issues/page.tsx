@@ -12,15 +12,17 @@ import { Issue } from "@prisma/client";
 
 const IssuesPage = () => {
   const [loadedIssues, setLoadedIssues] = React.useState<Issue[]>([]);
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [isLoading, setisLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
+
+  const hasIssues = loadedIssues && loadedIssues.length > 0;
 
   React.useEffect(() => {
     const getAllIssues = async () => {
       try {
         const response = await axios.get("/api/issues");
         setLoadedIssues(response.data);
-        setLoading(false);
+        setisLoading(false);
       } catch (error: any) {
         console.log(error);
         setError(error.message);
@@ -30,7 +32,7 @@ const IssuesPage = () => {
     getAllIssues();
   }, []);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="w-full h-screen flex items-center justify-center">
         Loading...
@@ -40,7 +42,7 @@ const IssuesPage = () => {
 
   return (
     <div className="w-full h-full">
-      {!loading && loadedIssues && loadedIssues.length > 0 ? (
+      {!isLoading && hasIssues ? (
         <React.Fragment>
           {loadedIssues.map((issue: Issue) => (
             <Card key={issue.id} className="mb-5">
