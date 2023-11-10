@@ -7,6 +7,7 @@ import axios from "axios";
 import { TextField, Button } from "@radix-ui/themes";
 
 import { useForm, Controller } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { IssueForm } from "@/types";
 
 import dynamic from "next/dynamic";
@@ -17,11 +18,16 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 });
 
 const NewIssuePage = () => {
+  const router = useRouter();
   const { register, control, handleSubmit } = useForm<IssueForm>();
 
+  const submitHandler = async (data: IssueForm) => {
+    await axios.post("/api/issues", data);
+    router.push("/issues");
+  };
   return (
     <form
-      onSubmit={handleSubmit((data) => console.log(data))}
+      onSubmit={handleSubmit((data) => submitHandler(data))}
       className="max-w-xl space-y-3"
     >
       <TextField.Root>
