@@ -2,13 +2,19 @@
 
 import React from "react";
 
+import axios from "axios";
+
 import { TextField, Button } from "@radix-ui/themes";
 
 import { useForm, Controller } from "react-hook-form";
 import { IssueForm } from "@/types";
 
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from "next/dynamic";
 import "easymde/dist/easymde.min.css";
+
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false,
+});
 
 const NewIssuePage = () => {
   const { register, control, handleSubmit } = useForm<IssueForm>();
@@ -26,7 +32,7 @@ const NewIssuePage = () => {
         name="description"
         control={control}
         render={({ field }) => (
-          <SimpleMDE placeholder="Description" {...field} />
+          <SimpleMDE placeholder="Description" {...field} ref={null} />
         )}
       />
 
