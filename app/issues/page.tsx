@@ -12,12 +12,11 @@ import { Issue } from "@prisma/client";
 
 const IssuesPage = () => {
   const [loadedIssues, setLoadedIssues] = React.useState<Issue[]>([]);
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const getAllIssues = async () => {
-      setLoading(true);
       try {
         const response = await axios.get("/api/issues");
         setLoadedIssues(response.data);
@@ -41,7 +40,7 @@ const IssuesPage = () => {
 
   return (
     <div className="w-full h-full">
-      {loadedIssues && loadedIssues.length > 0 ? (
+      {!loading && loadedIssues && loadedIssues.length > 0 ? (
         <React.Fragment>
           {loadedIssues.map((issue: Issue) => (
             <Card key={issue.id} className="mb-5">
