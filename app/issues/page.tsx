@@ -9,11 +9,16 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 import Link from "next/link";
 import { Issue } from "@prisma/client";
+import Drawer from "@/components/Drawer";
 
 const IssuesPage = () => {
   const [loadedIssues, setLoadedIssues] = React.useState<Issue[]>([]);
   const [isLoading, setisLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
+
+  const [showCrudDrawer, setShowCrudDrawer] = React.useState<boolean>(false);
+  const toggleCrudDrawer = (): void =>
+    setShowCrudDrawer((prevState: boolean) => !prevState);
 
   const hasIssues = loadedIssues && loadedIssues.length > 0;
 
@@ -41,44 +46,51 @@ const IssuesPage = () => {
   }
 
   return (
-    <div className="w-full h-full">
-      {!isLoading && hasIssues ? (
-        <React.Fragment>
-          {loadedIssues.map((issue: Issue) => (
-            <Card key={issue.id} className="mb-5">
-              <Text as="div" size="2" weight="bold">
-                {issue.title}
-              </Text>
-              <Text as="div" color="gray" size="2">
-                {issue.description}
-              </Text>
-            </Card>
-          ))}
+    <div className="flex overflow-x-hidden">
+      {/* TICKETS CONTENT CONTAINER */}
+      <div className="w-full h-full p-5 duration-200">
+        {!isLoading && hasIssues ? (
+          <React.Fragment>
+            {loadedIssues.map((issue: Issue) => (
+              <Card key={issue.id} className="mb-5">
+                <Text as="div" size="2" weight="bold">
+                  {issue.title}
+                </Text>
+                <Text as="div" color="gray" size="2">
+                  {issue.description}
+                </Text>
+              </Card>
+            ))}
 
-          <Link href="/issues/new" className="cursor-pointer">
+            {/* <Link href="/issues/new" className="cursor-pointer"> */}
             <Button
               variant="solid"
               className="flex items-center justify-center gap-x-1 transition-colors"
+              onClick={toggleCrudDrawer}
             >
               <AiOutlinePlus size={20} />
               <span>New Issue</span>
             </Button>
-          </Link>
-        </React.Fragment>
-      ) : (
-        <div className="flex flex-col items-center gap-y-2">
-          <h2>No issue to display.</h2>
-          <Link href="/issues/new" className="cursor-pointer">
-            <Button
-              variant="solid"
-              className="flex items-center justify-center gap-x-1 transition-colors"
-            >
-              <AiOutlinePlus size={20} />
-              <span>New Issue</span>
-            </Button>
-          </Link>
-        </div>
-      )}
+            {/* </Link> */}
+          </React.Fragment>
+        ) : (
+          <div className="flex flex-col items-center gap-y-2">
+            <h2>No issue to display.</h2>
+            <Link href="/issues/new" className="cursor-pointer">
+              <Button
+                variant="solid"
+                className="flex items-center justify-center gap-x-1 transition-colors"
+              >
+                <AiOutlinePlus size={20} />
+                <span>New Issue</span>
+              </Button>
+            </Link>
+          </div>
+        )}
+      </div>
+
+      {/* DRAWER */}
+      <Drawer show={showCrudDrawer} />
     </div>
   );
 };
