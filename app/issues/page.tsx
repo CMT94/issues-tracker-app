@@ -48,11 +48,15 @@ const IssuesPage = () => {
   return (
     <div className="flex overflow-x-hidden">
       {/* TICKETS CONTENT CONTAINER */}
-      <div className="w-full h-full p-5 duration-200">
+      <div className="w-full h-full overflow-y-auto p-5 duration-200">
         {!isLoading && hasIssues ? (
           <React.Fragment>
             {loadedIssues.map((issue: Issue) => (
-              <Card key={issue.id} className="mb-5">
+              <Card
+                key={issue.id}
+                className="mb-5 cursor-pointer hover:bg-gray-100 duration-200"
+                onClick={toggleCrudDrawer}
+              >
                 <Text as="div" size="2" weight="bold">
                   {issue.title}
                 </Text>
@@ -90,7 +94,7 @@ const IssuesPage = () => {
       </div>
 
       {/* DRAWER */}
-      <Drawer show={showCrudDrawer} />
+      <Drawer show={showCrudDrawer} onCloseHandler={toggleCrudDrawer} />
     </div>
   );
 };
