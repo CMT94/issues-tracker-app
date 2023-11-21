@@ -2,13 +2,8 @@ import React from "react";
 
 import { WindowSize } from "@/types";
 
-import {
-  AiOutlineClose,
-  AiOutlineShareAlt,
-  AiOutlineLike,
-} from "react-icons/ai";
-import { BsThreeDots } from "react-icons/bs";
-import { FaEye } from "react-icons/fa";
+import DrawerHeader from "./Drawer/DrawerHeader";
+import DrawerBody from "./Drawer/DrawerBody";
 
 interface DrawerProps {
   show: boolean;
@@ -45,31 +40,13 @@ const Drawer = ({ show, onCloseHandler }: DrawerProps): JSX.Element => {
 
   return (
     <div
-      className={`w-[400px] border-l overflow-y-auto px-2 ${
-        show ? "me-0 duration-200" : "-me-[400px] duration-200"
+      className={`w-[500px] border-l overflow-y-auto px-2 ${
+        show ? "me-0 duration-200" : "-me-[500px] duration-200"
       }`}
       style={styles.drawer}
     >
-      <div className="h-[56px] p-2 border-b flex items-center justify-end space-x-4">
-        <div>
-          <FaEye size={21} />
-        </div>
-        <div>
-          <AiOutlineLike size={21} />
-        </div>
-        <div>
-          <AiOutlineShareAlt size={21} />
-        </div>
-        <div>
-          <BsThreeDots size={21} />
-        </div>
-        <div
-          className="cursor-pointer border rounded-md border-white hover:border-gray-200 hover:bg-gray-200 duration-200"
-          onClick={onCloseHandler}
-        >
-          <AiOutlineClose size={21} />
-        </div>
-      </div>
+      <DrawerHeader onCloseHandler={onCloseHandler} />
+      <DrawerBody />
     </div>
   );
 };
