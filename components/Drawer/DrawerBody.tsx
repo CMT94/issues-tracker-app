@@ -1,15 +1,20 @@
 import React from "react";
 
-import { Avatar, Button, DropdownMenu } from "@radix-ui/themes";
+import { Avatar, Button, DropdownMenu, TextField } from "@radix-ui/themes";
 import { AiOutlinePaperClip } from "react-icons/ai";
 import { BsLink45Deg, BsThreeDots } from "react-icons/bs";
 import { HiMiniChevronDown } from "react-icons/hi2";
+import { Controller, useForm } from "react-hook-form";
+import SimpleMdeReact from "react-simplemde-editor";
+import { IssueForm } from "@/types";
 
 const DrawerBody = () => {
+  const { register, control, handleSubmit } = useForm<IssueForm>();
+
   return (
     <div className="p-2">
       <h2 className="font-bold mb-1 text-xl text-gray-700">Titre du ticket</h2>
-      <div className="flex justify-between mb-1">
+      <div className="flex justify-between mb-3">
         <div className="flex items-center space-x-2 ">
           <div className="cursor-pointer p-1 border rounded-sm bg-gray-100 border-gray-100">
             <AiOutlinePaperClip size={18} />
@@ -52,6 +57,25 @@ const DrawerBody = () => {
 
       <div>
         <h3 className="font-bold text-sm text-gray-700">Description</h3>
+
+        <form
+          // onSubmit={handleSubmit((data) => submitHandler(data))}
+          className="space-y-3"
+        >
+          <TextField.Root>
+            <TextField.Input placeholder="Title" {...register("title")} />
+          </TextField.Root>
+
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <SimpleMdeReact placeholder="Description" {...field} ref={null} />
+            )}
+          />
+
+          <Button>Create Issue</Button>
+        </form>
       </div>
     </div>
   );
