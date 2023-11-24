@@ -10,13 +10,6 @@ import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { IssueForm } from "@/types";
 
-import dynamic from "next/dynamic";
-import "easymde/dist/easymde.min.css";
-
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
-
 const NewIssuePage = () => {
   const router = useRouter();
   const { register, control, handleSubmit } = useForm<IssueForm>();
@@ -48,13 +41,13 @@ const NewIssuePage = () => {
           <TextField.Input placeholder="Title" {...register("title")} />
         </TextField.Root>
 
-        <Controller
+        {/* <Controller
           name="description"
           control={control}
           render={({ field }) => (
-            <SimpleMDE placeholder="Description" {...field} ref={null} />
+            // <SimpleMDE placeholder="Description" {...field} ref={null} />
           )}
-        />
+        /> */}
 
         <Button>Create Issue</Button>
       </form>
