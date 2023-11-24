@@ -2,17 +2,19 @@
 
 import React from "react";
 
-import { WindowSize } from "@/types";
+import { Issue, WindowSize } from "@/types";
 
 import DrawerHeader from "./Drawer/DrawerHeader";
 import DrawerBody from "./Drawer/DrawerBody";
+import IssueForm from "./Form/IssueForm";
 
 interface DrawerProps {
+  issue: Issue;
   show: boolean;
   onCloseHandler: () => void;
 }
 
-const Drawer = ({ show, onCloseHandler }: DrawerProps): JSX.Element => {
+const Drawer = ({ issue, show, onCloseHandler }: DrawerProps): JSX.Element => {
   const [windowSize, setWindowSize] = React.useState<WindowSize>({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -48,7 +50,9 @@ const Drawer = ({ show, onCloseHandler }: DrawerProps): JSX.Element => {
       style={styles.drawer}
     >
       <DrawerHeader onCloseHandler={onCloseHandler} />
-      <DrawerBody />
+      <DrawerBody>
+        <IssueForm {...issue} />
+      </DrawerBody>
     </div>
   );
 };
