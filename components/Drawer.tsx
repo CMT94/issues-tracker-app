@@ -9,7 +9,7 @@ import DrawerBody from "./Drawer/DrawerBody";
 import IssueForm from "./Form/IssueForm";
 
 interface DrawerProps {
-  issue: Issue;
+  issue: Issue | undefined;
   show: boolean;
   onCloseHandler: () => void;
 }

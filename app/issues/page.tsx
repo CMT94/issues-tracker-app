@@ -8,17 +8,30 @@ import { Button, Card, Text } from "@radix-ui/themes";
 import { AiOutlinePlus } from "react-icons/ai";
 
 import Link from "next/link";
-import { Issue } from "@prisma/client";
 import Drawer from "@/components/Drawer";
+import { Issue } from "@/types";
 
 const IssuesPage = () => {
   const [loadedIssues, setLoadedIssues] = React.useState<Issue[]>([]);
+  const [selectedIssue, setSelectedIssue] = React.useState<Issue | undefined>(
+    undefined
+  );
   const [isLoading, setisLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
 
   const [showCrudDrawer, setShowCrudDrawer] = React.useState<boolean>(false);
   const toggleCrudDrawer = (): void =>
     setShowCrudDrawer((prevState: boolean) => !prevState);
+
+  const handleSelectIssue = React.useCallback(
+    (issue: Issue) => {
+      setSelectedIssue(issue);
+      if (!showCrudDrawer) {
+        toggleCrudDrawer();
+      }
+    },
+    [showCrudDrawer]
+  );
 
   const hasIssues = loadedIssues && loadedIssues.length > 0;
 
@@ -55,7 +68,7 @@ const IssuesPage = () => {
               <Card
                 key={issue.id}
                 className="mb-5 cursor-pointer hover:bg-gray-100 duration-200"
-                onClick={toggleCrudDrawer}
+                onClick={() => handleSelectIssue(issue)}
               >
                 <Text as="div" size="2" weight="bold">
                   {issue.title}
@@ -94,7 +107,11 @@ const IssuesPage = () => {
       </div>
 
       {/* DRAWER */}
-      <Drawer show={showCrudDrawer} onCloseHandler={toggleCrudDrawer} />
+      <Drawer
+        issue={selectedIssue}
+        show={showCrudDrawer}
+        onCloseHandler={toggleCrudDrawer}
+      />
     </div>
   );
 };
