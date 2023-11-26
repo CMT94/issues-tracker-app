@@ -7,7 +7,7 @@ export interface IssueForm {
   description: string;
 }
 
-export type Status = "OPEN" | "IN_PROGRESS" | "DONE";
+export type Status = "OPEN" | "IN_PROGRESS" | "IN_TEST" | "CLOSED";
 
 export interface Issue {
   id: number;
