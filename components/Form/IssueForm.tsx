@@ -3,7 +3,7 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
 
-import { IssueForm } from "@/types";
+import { IssueForm, Status } from "@/types";
 import { StatusEnum } from "@/enum/StatusEnum";
 
 import { Avatar, Button, DropdownMenu } from "@radix-ui/themes";
@@ -13,12 +13,13 @@ import { AiOutlinePaperClip } from "react-icons/ai";
 import { BsLink45Deg, BsThreeDots } from "react-icons/bs";
 
 interface IssueFormProps {
-  title: string | undefined;
-  description: string | undefined;
-  status: StatusEnum;
+  id?: number | undefined;
+  title?: string | undefined;
+  description?: string | undefined;
+  status?: Status | undefined;
 }
 
-const IssueForm = ({ title, description, status }: IssueFormProps) => {
+const IssueForm = ({ id, title, description, status }: IssueFormProps) => {
   const { register, control, handleSubmit } = useForm<IssueForm>();
   const editorRef = React.useRef<any>(null);
 
@@ -31,7 +32,7 @@ const IssueForm = ({ title, description, status }: IssueFormProps) => {
     }
   };
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler} className="space-y-3">
       <h2 className="font-bold mb-1 text-xl text-gray-700">
         {title ? title : "What needs to be done?"}
       </h2>
@@ -85,7 +86,7 @@ const IssueForm = ({ title, description, status }: IssueFormProps) => {
             <Editor
               apiKey={process.env.NEXT_PUBLIC_TINY_MCE_API_KEY}
               onInit={(evt, editor) => (editorRef.current = editor)}
-              initialValue=""
+              initialValue={description ? description : ""}
               init={{
                 height: 250,
                 menubar: false,
@@ -103,8 +104,8 @@ const IssueForm = ({ title, description, status }: IssueFormProps) => {
             />
           )}
         />
-        <Button type="submit">Create Issue</Button>
       </div>
+      <Button type="submit">Create Issue</Button>
     </form>
   );
 };

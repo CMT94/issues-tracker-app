@@ -1,5 +1,3 @@
-import { StatusEnum } from "@/enum/StatusEnum";
-
 export interface WindowSize {
   width: number;
   height: number;
@@ -9,11 +7,13 @@ export interface IssueForm {
   description: string;
 }
 
+export type Status = "OPEN" | "IN_PROGRESS" | "DONE";
+
 export interface Issue {
   id: number;
   title: string;
   description: string;
-  status: StatusEnum;
+  status: Status;
   createdAt: string;
   updatedAt: string;
 }
